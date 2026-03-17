@@ -7,6 +7,9 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {delay, of} from 'rxjs';
 import {ClientService} from '../_services/client.service';
+import {UserService} from '../_services/user.service';
+import {routeToLobby} from '../_helpers/routing.helper';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login.component',
@@ -28,6 +31,8 @@ import {ClientService} from '../_services/client.service';
 export class LoginComponent {
   private readonly clientService: ClientService = inject(ClientService);
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  private readonly router: Router = inject(Router);
+  private readonly userService = inject(UserService);
   // private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   readonly loginForm = this.fb.group({
@@ -59,6 +64,8 @@ export class LoginComponent {
       .subscribe({
         next: (response: { token: string, name: string }) => {
           console.log('Mock finished', response);
+          this.userService.saveToken(response.token);
+          routeToLobby(this.router);
           // this.isLoading = false;
           this.isLoadingSignal.set(false);
           // this.cdr.markForCheck();
