@@ -1,0 +1,16 @@
+<nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSelect, actionEdit, actionDelete]">
+  <nz-card-meta [nzTitle]="character().name | name : ';'"
+                [nzDescription]="character().characterClass" />
+</nz-card>
+<ng-template #coverTemplate>
+  <img [alt]="character().name" [src]="character().image" />
+</ng-template>
+<ng-template #actionSelect>
+  <nz-icon nzType="select" (click)="characterSelected.emit(character())" />
+</ng-template>
+<ng-template #actionEdit>
+  <nz-icon nzType="edit" />
+</ng-template>
+<ng-template #actionDelete>
+  <nz-icon nzType="delete" />
+</ng-template>
