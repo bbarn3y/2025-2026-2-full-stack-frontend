@@ -9,6 +9,6 @@ export class ClientService {
   private readonly http: HttpClient = inject(HttpClient);
 
   login(): Observable<{ token: string, name: string }> {
-    return this.http.get< { token: string, name: string } >('https://mocki.io/v1/6c22c774-cd16-472f-be1a-899658cb7e30');
+    return this.http.get< { token: string, name: string } >('https://mocki.io/v1/6f7635cd-da2d-462f-9a64-36d72f3a9de4');
   }
 }

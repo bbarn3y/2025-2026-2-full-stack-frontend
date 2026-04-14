@@ -35,15 +35,14 @@ export class CharacterService {
 
   private readCharactersFromStorage(): Character[] {
     // @todo Remove mock implementation.
-    return [
-      new Character('Mage Máté', '/assets/classes/mage.webp', CharacterClass.MAGE, 5),
-      new Character('Rogue Róbert', '/assets/classes/rogue.webp', CharacterClass.ROGUE, 7),
-      new Character('Warrior Vazul', '/assets/classes/warrior.webp', CharacterClass.WARRIOR, 10),
-    ];
+    // return [
+    //   new Character('Mage Máté', '/assets/classes/mage.webp', CharacterClass.MAGE, 5),
+    //   new Character('Rogue Róbert', '/assets/classes/rogue.webp', CharacterClass.ROGUE, 7),
+    //   new Character('Warrior Vazul', '/assets/classes/warrior.webp', CharacterClass.WARRIOR, 10),
+    // ];
 
-    // @todo Add real implementation.
-    // const storageString = localStorage.getItem(this.CHARACTER_STORAGE_KEY);
-    // return storageString ? JSON.parse(storageString) : [];
+    const storageString = localStorage.getItem(this.CHARACTER_STORAGE_KEY);
+    return storageString ? JSON.parse(storageString) : [];
   }
 
   private saveCharacters(characters: Character[]): void {

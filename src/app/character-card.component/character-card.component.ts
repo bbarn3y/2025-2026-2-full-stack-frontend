@@ -1,4 +1,4 @@
-import {Component, input, Input, output} from '@angular/core';
+import {Component, EventEmitter, input, Input, Output, output} from '@angular/core';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {Character} from '../_models/character.model';
@@ -18,6 +18,7 @@ export class CharacterCardComponent {
   // @Input() character: Character;
   character = input.required<Character>();
 
+  // @Output() characterSelected: EventEmitter<Character> = new EventEmitter();
   characterSelected = output<Character>();
 
   constructor() {}

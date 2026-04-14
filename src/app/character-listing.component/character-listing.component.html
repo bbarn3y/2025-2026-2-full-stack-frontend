@@ -11,9 +11,10 @@
   @for (character of charactersValue; track character.name) {
     <app-character-card
       appSelectedCharacter
-      [selected]="true"
+      [color]="ClassDetails[character.characterClass].color"
+      [selected]="selectedCharacter?.id === character.id"
       [character]="character"
-
+      (characterSelected)="selectedCharacter = $event"
     ></app-character-card>
   }
 } @else {
