@@ -4,7 +4,14 @@
 </div>
 -->
 
-@let charactersValue = characters();
+<input #searchInput
+       nz-input
+       placeholder="Filter characters..."
+       [value]="searchQuery()"
+       (input)="searchQuery.set(searchInput.value.trim())"
+       />
+
+@let charactersValue = filteredCharacters();
 
 <!-- (characterSelected)="selectCharacter = $event" -->
 @if (charactersValue.length > 0) {

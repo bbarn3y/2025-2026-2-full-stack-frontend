@@ -9,7 +9,7 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NzInputDirective} from 'ng-zorro-antd/input';
 import {ValidatorService} from '../_services/validator.service';
 import {CharacterService} from '../_services/character.service';
-import {NzModalRef} from 'ng-zorro-antd/modal';
+import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-character-editor.component',
@@ -30,6 +30,7 @@ export class CharacterEditorComponent {
 
   private readonly characterService = inject(CharacterService);
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly nzModalData: { character?: Character } = inject(NZ_MODAL_DATA, { optional: true });
   private readonly nzModalRef = inject(NzModalRef);
   private readonly validatorService = inject(ValidatorService);
 
@@ -40,12 +41,14 @@ export class CharacterEditorComponent {
     maxHp: FormControl<number>;
   }>;
 
+  private readonly originalCharacter = this.nzModalData?.character ?? null;
+
   constructor() {
     this.characterForm = this.fb.group({
-      name: ['', [Validators.required, this.validatorService.fullNameValidator]],
-      image: ['', [Validators.required]],
-      characterClass: [CharacterClass.MAGE, [Validators.required]],
-      maxHp: [1, [Validators.required, Validators.min(1), Validators.max(12)]]
+      name: [this.originalCharacter?.name ?? '', [Validators.required, this.validatorService.fullNameValidator]],
+      image: [this.originalCharacter?.image ?? '', [Validators.required]],
+      characterClass: [this.originalCharacter?.characterClass ?? CharacterClass.MAGE, [Validators.required]],
+      maxHp: [this.originalCharacter?.maxHp ?? 1, [Validators.required, Validators.min(1), Validators.max(12)]]
     }, {
       validators: [this.validatorService.maxHpByClassValidator]
     })
@@ -64,7 +67,11 @@ export class CharacterEditorComponent {
       this.characterForm.controls.maxHp.value,
     )
 
-    this.characterService.addCharacter(character);
+    if (this.originalCharacter) {
+      this.characterService.editCharacter(this.originalCharacter.id, character);
+    } else {
+      this.characterService.addCharacter(character);
+    }
 
     this.nzModalRef?.close()
   }

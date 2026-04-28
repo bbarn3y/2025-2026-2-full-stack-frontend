@@ -9,8 +9,15 @@
   <nz-icon nzType="select" (click)="characterSelected.emit(character())" />
 </ng-template>
 <ng-template #actionEdit>
-  <nz-icon nzType="edit" />
+  <nz-icon nzType="edit" (click)="editCharacter()" />
 </ng-template>
 <ng-template #actionDelete>
-  <nz-icon nzType="delete" />
+  <nz-icon nzType="delete"
+           nz-popconfirm
+           nzPopconfirmTitle="Are you sure you wish to delete this character?"
+           nzPopconfirmPlacement="bottom"
+           nzOkText="Yes"
+           nzCancelText="No"
+           (nzOnConfirm)="characterService.removeCharacters(character().id)"
+  />
 </ng-template>
